@@ -1,5 +1,6 @@
 import sys
 import pygame
+from settings import Settings
 
 #Making an empty Pygame window by creating a class to represent the game.
 
@@ -7,14 +8,13 @@ class CatInvasion:
     def __init__(self):
         """Overall class to manage game assets and behavior."""
         pygame.init()
-        
         self.clock = pygame.time.Clock() #We measure the time it takes to iterate over the
-        
-        self.screen = pygame.display.set_mode((1200,800))
+        self.settings = Settings() #initialize the settings from settings module
+        self.screen = pygame.display.set_mode((self.settings.screen_width,
+                                               self.settings.screen_height)) #we take this now from settings module
         pygame.display.set_caption("Cat Invasion")
         
-        # Set the background color
-        self.bg_color = (230, 230, 230)
+
         
     def run_game(self):
         """Start the main loop for the game."""
@@ -24,7 +24,7 @@ class CatInvasion:
                 if event.type == pygame.QUIT:
                     sys.exit()
             # Redraw the screen during each pass through the loop.
-            self.screen.fill(self.bg_color)
+            self.screen.fill(self.settings.bg_color)
             
             #Make the most recently drawn screen visible.
             pygame.display.flip()
