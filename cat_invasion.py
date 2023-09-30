@@ -32,8 +32,14 @@ class CatInvasion:
         #Watch for keyboard and mouse events.
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT:   #quits the game
                     sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        #Move girl to the right
+                        self.girl.rect.x += 10
+                    elif event.key == pygame.K_LEFT:
+                        self.girl.rect.x -= 10
                     
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
