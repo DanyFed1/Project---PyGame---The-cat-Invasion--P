@@ -30,9 +30,9 @@ class Girl:
         """Update the ship's position based on the movement flag."""
         #Update the ship's x value, not the rect.
         if self.moving_right:
-            self.rect.x += self.settings.ship_speed
+            self.x += self.settings.girl_speed
         elif self.moving_left:
-            self.rect.x -= self.settings.ship_speed
+            self.x -= self.settings.girl_speed
         
         #Update rect object from self.x
         self.rect.x = self.x
