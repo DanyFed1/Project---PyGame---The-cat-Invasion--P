@@ -8,4 +8,6 @@ class Settings:
         self.screen_height = 800
         self.bg_color = (30,0,30) #background color
         
+        self.girl_speed = 1.5 #Controlling characters speed
+        
         

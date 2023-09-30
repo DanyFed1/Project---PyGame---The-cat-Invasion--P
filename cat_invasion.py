@@ -22,6 +22,7 @@ class CatInvasion:
         """Start the main loop for the game."""
         while True:
             self._check_events()
+            self.girl.update() #update location of a character
             self._update_screen()
             
             #controlling the frame rate based on the clocl measurement. Every time we run faster
@@ -37,9 +38,17 @@ class CatInvasion:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         #Move girl to the right
-                        self.girl.rect.x += 10
-                    elif event.key == pygame.K_LEFT:
-                        self.girl.rect.x -= 10
+                        self.girl.moving_right = True
+                    elif event.key ==pygame.K_LEFT:
+                        #Move girl left
+                        self.girl.moving_left = True
+                        
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT: #Stop moving right if key is up
+                        self.girl.moving_right = False
+                    elif event.key == pygame.K_LEFT: #Stop moving left if key is up
+                        self.girl.moving_left = False
+                    
                     
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""

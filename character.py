@@ -7,6 +7,7 @@ class Girl:
         """Initialize the character and set its starting position."""
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
+        self.settings = ai_game.settings 
         
         #Load the girl image and get its rect
         self.image = pygame.image.load('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/rcIaniCpy5NCWgUYcK2r-1-sb7rx-_1_.bmp')
@@ -17,6 +18,24 @@ class Girl:
         
         #Start each new girl at the bottom center of the bottom of the screen
         self.rect.midbottom = self.screen_rect.midbottom
+        
+        #Store a float for the girl's exact horizontal position.
+        self.x = float(self.rect.x)
+        
+        #Movement flags; start with a ship that's not moving.
+        self.moving_right = False
+        self.moving_left = False
+        
+    def update(self):
+        """Update the ship's position based on the movement flag."""
+        #Update the ship's x value, not the rect.
+        if self.moving_right:
+            self.rect.x += self.settings.ship_speed
+        elif self.moving_left:
+            self.rect.x -= self.settings.ship_speed
+        
+        #Update rect object from self.x
+        self.rect.x = self.x
         
     def blitme(self):
         """Draw the girl at its current location."""
