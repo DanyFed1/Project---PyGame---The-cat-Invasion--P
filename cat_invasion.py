@@ -13,6 +13,7 @@ class CatInvasion:
         self.settings = Settings() #initialize the settings from settings module
         self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                self.settings.screen_height)) #we take this now from settings module
+        self.fullscreen = False  # Flag to keep track of fullscreen mode
         pygame.display.set_caption("Cat Invasion")
         
         self.girl = Girl(self)
@@ -36,19 +37,30 @@ class CatInvasion:
                 if event.type == pygame.QUIT:   #quits the game
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RIGHT:
-                        #Move girl to the right
-                        self.girl.moving_right = True
-                    elif event.key ==pygame.K_LEFT:
-                        #Move girl left
-                        self.girl.moving_left = True
-                        
+                    self._check_keydown_events(event)        #refactoring   
                 elif event.type == pygame.KEYUP:
-                    if event.key == pygame.K_RIGHT: #Stop moving right if key is up
-                        self.girl.moving_right = False
-                    elif event.key == pygame.K_LEFT: #Stop moving left if key is up
-                        self.girl.moving_left = False
+                    self._check_keyup_events(event)
                     
+    def _check_keydown_events(self, event):
+        """Respond to keypress."""
+        if event.key == pygame.K_RIGHT:
+            #Move girl to the right
+            self.girl.moving_right = True
+        elif event.key ==pygame.K_LEFT:
+            #Move girl left
+            self.girl.moving_left = True
+        elif event.key == pygame.K_q: #Quit the game 
+            sys.exit()
+        elif event.key == pygame.K_f:  # Toggle fullscreen with 'F' key
+            self._toggle_fullscreen()
+   
+    def _check_keyup_events(self, event):
+        """Respond to key releases."""
+        if event.key == pygame.K_RIGHT:
+            self.girl.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.girl.moving_left = False
+                       
                     
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -58,6 +70,16 @@ class CatInvasion:
         
         #Make the most recently drawn screen visible.
         pygame.display.flip()
+        
+    def _toggle_fullscreen(self):
+        """Toggle between fullscreen and windowed mode."""
+        self.fullscreen = not self.fullscreen  # Toggle the fullscreen flag
+        if self.fullscreen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self.girl.screen = self.screen  # Update the screen reference in the girl object
+    
                     
 if __name__ == "__main__":
     #Make a game instance, and run the game,
