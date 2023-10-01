@@ -20,6 +20,8 @@ class CatInvasion:
         self.girl = Girl(self)
         self.bullets = pygame.sprite.Group()
         
+        self.bg_image = self.load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/DALL·E-2023-10-01-18.35.bmp')
+        
     def run_game(self):
         """Start the main loop for the game."""
         while True:
@@ -79,15 +81,18 @@ class CatInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                  self.bullets.remove(bullet)
-                       
-                    
+    
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
-        # Redraw the screen during each pass through the loop.
-        self.screen.fill(self.settings.bg_color)
+        # Draw the background image.
+        self.screen.blit(self.bg_image, (0, 0))
+        
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.girl.blitme()
+        
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()
         
         #Make the most recently drawn screen visible.
         pygame.display.flip()
@@ -100,6 +105,12 @@ class CatInvasion:
         else:
             self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.girl.screen = self.screen  # Update the screen reference in the girl object
+        
+    def load_bg_image(self, image_path):
+        """Load and scale the background image."""
+        bg_image = pygame.image.load(image_path)
+        bg_image = pygame.transform.scale(bg_image, (self.settings.screen_width, self.settings.screen_height))
+        return bg_image
     
                     
 if __name__ == "__main__":
