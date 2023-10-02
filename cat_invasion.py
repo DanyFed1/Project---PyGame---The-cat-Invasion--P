@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from character import Girl
 from bullet import Bullet
+from allien_cat import Alien_Cat
 
 #Making an empty Pygame window by creating a class to represent the game.
 
@@ -19,8 +20,11 @@ class CatInvasion:
         
         self.girl = Girl(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
         
-        self.bg_image = self.load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/DALL·E-2023-10-01-18.35.bmp')
+        self._create_cat_fleet()
+        
+        self.bg_image = self.load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
         
     def run_game(self):
         """Start the main loop for the game."""
@@ -90,6 +94,7 @@ class CatInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.girl.blitme()
+        self.aliens.draw(self.screen)
         
         # Make the most recently drawn screen visible.
         pygame.display.flip()
@@ -112,6 +117,10 @@ class CatInvasion:
         bg_image = pygame.transform.scale(bg_image, (self.settings.screen_width, self.settings.screen_height))
         return bg_image
     
+    def _create_cat_fleet(self):
+        """Creat the fleet of cats"""
+        alien_cat = Alien_Cat(self)
+        self.aliens.add(alien_cat)
                     
 if __name__ == "__main__":
     #Make a game instance, and run the game,
