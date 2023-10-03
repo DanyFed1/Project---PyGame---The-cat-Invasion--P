@@ -82,10 +82,16 @@ class CatInvasion:
         """Update position of bullets and get rid of old bullets."""
         # Update bullet positions.
         self.bullets.update()
-        # Get rid of bullets that have disappeared.
+        # Get rid of bullets that have disappeared for memory reasons
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                  self.bullets.remove(bullet)
+        
+        #Check if bullet hits a cat
+        #if yes, removes both objects
+        collisions = pygame.sprite.groupcollide(
+                self.bullets, self.aliens, True, True)
+        
     
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
