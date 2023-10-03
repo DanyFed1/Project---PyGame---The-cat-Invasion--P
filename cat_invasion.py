@@ -24,7 +24,7 @@ class CatInvasion:
         
         self._create_cat_fleet()
         
-        self.bg_image = self.load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
+        self.bg_image = self._load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
         
     def run_game(self):
         """Start the main loop for the game."""
@@ -32,6 +32,7 @@ class CatInvasion:
             self._check_events()
             self.girl.update() #update location of a character
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
             
             #controlling the frame rate based on the clocl measurement. Every time we run faster
@@ -111,17 +112,63 @@ class CatInvasion:
             self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.girl.screen = self.screen  # Update the screen reference in the girl object
         
-    def load_bg_image(self, image_path):
+    def _load_bg_image(self, image_path):
         """Load and scale the background image."""
         bg_image = pygame.image.load(image_path)
         bg_image = pygame.transform.scale(bg_image, (self.settings.screen_width, self.settings.screen_height))
         return bg_image
     
+    def _create_alien(self, x_position):
+        """Create a cat and place it in a the row""" 
+        new_alien = Alien_Cat(self)
+        new_alien.x = x_position
+        new_alien.rect.x = x_position
+        self.aliens.add(new_alien)
+    
     def _create_cat_fleet(self):
         """Creat the fleet of cats"""
+        # Create an alien and keep adding cats until there's no room left.
+        # Spacing between cats is one cat width and one cat height.
         alien_cat = Alien_Cat(self)
-        self.aliens.add(alien_cat)
-                    
+        alien_width, alien_height = alien_cat.rect.size
+        
+        current_x, current_y = alien_width, alien_height
+        while current_y < (self.settings.screen_height - 3 * alien_height):
+            while current_x < (self.settings.screen_width - 2 * alien_width):
+                self._create_alien(current_x, current_y)
+                current_x += 2 * alien_width
+        
+            #After row is done; reset horizontal position and increment on vertical position
+            current_x = alien_width
+            current_y += 2* alien_height
+    
+    def _check_fleet_edges(self):
+        """Respond appropriately if any aliens have reached an edge."""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+            
+    def _change_fleet_direction(self):
+        """Drop all cats and change the fleet's direction."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+            
+    def _create_alien(self, x_position, y_position):
+        """Create a cat and place it in a row""" 
+        new_alien = Alien_Cat(self)
+        new_alien.x = x_position
+        new_alien.rect.x = x_position
+        new_alien.rect.y = y_position
+        self.aliens.add(new_alien)
+        
+    def _update_aliens(self):
+        """Check if the cats are at an edge, then update positions."""
+        self._check_fleet_edges()
+        self.aliens.update()
+
+    
 if __name__ == "__main__":
     #Make a game instance, and run the game,
     ai = CatInvasion()

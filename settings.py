@@ -18,3 +18,10 @@ class Settings:
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 5 #sets the limit of allowed bullets
         
+        #Cats' settings: 
+        self.cat_speed = 1.0
+        self.fleet_drop_speed = 10
+        #fleet direction of 1 represents right; -1 represents left.
+        self.fleet_direction = 1
+        
+        
