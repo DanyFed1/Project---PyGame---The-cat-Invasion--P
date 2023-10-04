@@ -12,7 +12,7 @@ class Girl:
         #Load the girl image and get its rect
         self.image = pygame.image.load('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/rcIaniCpy5NCWgUYcK2r-1-sb7rx-_1_.bmp')
         # Resize the image
-        self.image = pygame.transform.scale(self.image, (100, 100))  # Set new dimensions (width, height)
+        self.image = pygame.transform.scale(self.image, (80, 80))  # Set new dimensions (width, height)
         self.rect = self.image.get_rect() #pygame treats objects as rectangles which 
         #simplifies the collision registration
         

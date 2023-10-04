@@ -4,6 +4,8 @@ from settings import Settings
 from character import Girl
 from bullet import Bullet
 from allien_cat import Alien_Cat
+from time import sleep
+from game_stats import GameStats
 
 #Making an empty Pygame window by creating a class to represent the game.
 
@@ -17,6 +19,9 @@ class CatInvasion:
                                                self.settings.screen_height)) #we take this now from settings module
         self.fullscreen = False  # Flag to keep track of fullscreen mode
         pygame.display.set_caption("Cat Invasion")
+        
+        # Create an instance to store game statistics.
+        self.stats = GameStats(self)
         
         self.girl = Girl(self)
         self.bullets = pygame.sprite.Group()
@@ -87,10 +92,14 @@ class CatInvasion:
             if bullet.rect.bottom <= 0:
                  self.bullets.remove(bullet)
         
+        self._check_bullet_alien_collisions()
+        
+    def _check_bullet_alien_collisions(self):
         #Check if bullet hits a cat
         #if yes, removes both objects
         collisions = pygame.sprite.groupcollide(
                 self.bullets, self.aliens, True, True)
+        
         
     
     def _update_screen(self):
@@ -178,6 +187,26 @@ class CatInvasion:
         """Check if the cats are at an edge, then update positions."""
         self._check_fleet_edges()
         self.aliens.update()
+        
+        # Look for alien-ship collisions.
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("You got hit by a fluffy invader!!!")
+            
+    def _ship_hit(self):
+        """Respond to the cat hitting a character."""
+        # Decrement ships_left.
+        self.stats.lives_left -= 1
+        # Get rid of any remaining bullets and aliens.
+        self.bullets.empty()
+        self.aliens.empty()
+        # Create a new fleet and center the ship.
+        self._create_cat_fleet()
+        self.girl.center_character()
+        
+        #pause
+        sleep(0.5)
+        
+        
 
     
 if __name__ == "__main__":

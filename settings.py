@@ -10,6 +10,7 @@ class Settings:
         
         #Girl settings
         self.girl_speed = 1.5 #Controlling characters speed
+        self.lives_limit = 3
         
         #Bullet settings:  #To be later replaced with a fish onject.
         self.bullet_speed = 2.5
