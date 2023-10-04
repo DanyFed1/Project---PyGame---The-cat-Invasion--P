@@ -12,7 +12,7 @@ class Settings:
         self.girl_speed = 1.5 #Controlling characters speed
         
         #Bullet settings:  #To be later replaced with a fish onject.
-        self.bullet_speed = 2.0
+        self.bullet_speed = 2.5
         self.bullet_width = 30
         self.bullet_height = 40
         self.bullet_color = (60, 60, 60)

@@ -109,6 +109,11 @@ class CatInvasion:
         #Make the most recently drawn screen visible.
         pygame.display.flip()
         
+        if not self.aliens:
+            # Destroy existing bullets and create new cat fleet.
+            self.bullets.empty()
+            self._create_cat_fleet()
+        
     def _toggle_fullscreen(self):
         """Toggle between fullscreen and windowed mode."""
         self.fullscreen = not self.fullscreen  # Toggle the fullscreen flag
