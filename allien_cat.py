@@ -45,4 +45,10 @@ class Alien_Cat(Sprite):
         """Move cat tot the right"""
         self.x += self.settings.cat_speed * self.settings.fleet_direction
         self.rect.x = self.x
+    
+    def resize(self, width, height):
+        """Resize the image. for the screen dimensions"""
+        self.image = pygame.transform.scale(self.original_image, (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = self.screen_rect.midbottom
         

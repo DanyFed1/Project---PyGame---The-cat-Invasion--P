@@ -6,6 +6,7 @@ from bullet import Bullet
 from allien_cat import Alien_Cat
 from time import sleep
 from game_stats import GameStats
+from start_button import GameButton
 
 #Making an empty Pygame window by creating a class to represent the game.
 
@@ -32,7 +33,10 @@ class CatInvasion:
         self.bg_image = self._load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
         
         # Start Cat Invasion in an active state.
-        self.game_active = True
+        self.game_active = False
+        
+        # Make the Play button.
+        self.play_button = GameButton(self, "New Game")
         
     def run_game(self):
         """Start the main loop for the game."""
@@ -105,8 +109,7 @@ class CatInvasion:
         collisions = pygame.sprite.groupcollide(
                 self.bullets, self.aliens, True, True)
         
-        
-    
+
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         # Draw the background image.
@@ -116,6 +119,10 @@ class CatInvasion:
             bullet.draw_bullet()
         self.girl.blitme()
         self.aliens.draw(self.screen)
+        
+        # Draw the play button if the game is inactive.
+        if not self.game_active:
+            self.play_button.draw_button()
         
         # Make the most recently drawn screen visible.
         pygame.display.flip()
@@ -133,6 +140,9 @@ class CatInvasion:
         self.fullscreen = not self.fullscreen  # Toggle the fullscreen flag
         if self.fullscreen:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            # self.girl.resize(self)
+            # self.bullets.resize(self)
+            # self.aliens.resize(self)
         else:
             self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.girl.screen = self.screen  # Update the screen reference in the girl object

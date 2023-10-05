@@ -30,3 +30,9 @@ class Bullet(Sprite):
     def draw_bullet(self):
         """Draw the bullet to the screen."""
         self.screen.blit(self.image, self.rect)
+        
+    def resize(self, width, height):
+        """Resize the image. for the screen dimensions"""
+        self.image = pygame.transform.scale(self.original_image, (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = self.screen_rect.midbottom

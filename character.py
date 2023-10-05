@@ -45,3 +45,9 @@ class Girl:
         """Position character at the center of the screen."""
         self.rect.midbottom = self.screen_rect.midbottom
         self.x = float(self.rect.x)
+        
+    def resize(self, width, height):
+        """Resize the image. for the screen dimensions"""
+        self.image = pygame.transform.scale(self.original_image, (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = self.screen_rect.midbottom
