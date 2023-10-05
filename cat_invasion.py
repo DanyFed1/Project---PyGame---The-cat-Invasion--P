@@ -31,13 +31,18 @@ class CatInvasion:
         
         self.bg_image = self._load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
         
+        # Start Cat Invasion in an active state.
+        self.game_active = True
+        
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.girl.update() #update location of a character
-            self._update_bullets()
-            self._update_aliens()
+            
+            if self.game_active:
+                self.girl.update() #update location of a character
+                self._update_bullets()
+                self._update_aliens()
             self._update_screen()
             
             #controlling the frame rate based on the clocl measurement. Every time we run faster
@@ -188,26 +193,38 @@ class CatInvasion:
         self._check_fleet_edges()
         self.aliens.update()
         
-        # Look for alien-ship collisions.
-        if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            print("You got hit by a fluffy invader!!!")
+        # Look for alien-character collisions.
+        if pygame.sprite.spritecollideany(self.girl, self.aliens):
+            self._character_hit()
+        
+        # Look for aliens hitting the bottom of the screen.
+        self._check_cat_bottom()
             
-    def _ship_hit(self):
+    def _character_hit(self):
         """Respond to the cat hitting a character."""
-        # Decrement ships_left.
-        self.stats.lives_left -= 1
-        # Get rid of any remaining bullets and aliens.
-        self.bullets.empty()
-        self.aliens.empty()
-        # Create a new fleet and center the ship.
-        self._create_cat_fleet()
-        self.girl.center_character()
+        if self.stats.lives_left > 0:
+            # Decrement character_left.
+            self.stats.lives_left -= 1
+            # Get rid of any remaining bullets and aliens.
+            self.bullets.empty()
+            self.aliens.empty()
+            # Create a new fleet and center the character.
+            self._create_cat_fleet()
+            self.girl.center_character()
+            
+            #pause
+            sleep(0.5)
+            
+        else:
+            self.game_active = False
         
-        #pause
-        sleep(0.5)
-        
-        
-
+    def _check_cat_bottom(self):
+        """Check if any of the cats have reached the bottom of the screen."""
+        for cat in self.aliens.sprites():
+            if cat.rect.bottom >= self.settings.screen_height:
+                # Treat this the same as if the ship got hit.
+                self._character_hit()
+                break
     
 if __name__ == "__main__":
     #Make a game instance, and run the game,
