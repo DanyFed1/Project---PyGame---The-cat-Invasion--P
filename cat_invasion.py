@@ -114,6 +114,12 @@ class CatInvasion:
         collisions = pygame.sprite.groupcollide(
                 self.bullets, self.aliens, True, True)
         
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.cat_points * len(aliens)
+            self.sb.prep_score()
+            self.sb.check_high_score()
+        
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -255,6 +261,7 @@ class CatInvasion:
             
             # Reset the game statistics.
             self.stats.reset_stats()
+            self.sb.prep_score()
             self.game_active = True
             
             # Get rid of any remaining bullets and aliens.
