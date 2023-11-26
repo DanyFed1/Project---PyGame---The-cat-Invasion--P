@@ -1,16 +1,19 @@
 import pygame
+import os
 
 class Girl:
     """A class to maange player controlled character - girl"""
     
     def __init__(self, ai_game):
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
         """Initialize the character and set its starting position."""
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
         self.settings = ai_game.settings 
         
         #Load the girl image and get its rect
-        self.image = pygame.image.load('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/rcIaniCpy5NCWgUYcK2r-1-sb7rx-_1_.bmp')
+        image_path = os.path.join(self.base_dir, 'assets/Game images/rcIaniCpy5NCWgUYcK2r-1-sb7rx-_1_.bmp')
+        self.image = pygame.image.load(image_path)
         # Resize the image
         self.image = pygame.transform.scale(self.image, (80, 80))  # Set new dimensions (width, height)
         self.rect = self.image.get_rect() #pygame treats objects as rectangles which 

@@ -1,16 +1,19 @@
 import pygame.font
+import os
 
 class GameButton:
     
     def __init__(self, ai_game, msg):
         """Initialize button attributes."""
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         # Set the dimensions and properties of the button.
         self.width, self.height = 200, 50
         self.button_color = (0, 0, 0)
         self.text_color = (255, 255, 255)
-        self.font = pygame.font.Font("/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/slkscre.ttf", 48)
+        font_path = os.path.join(self.base_dir, 'assets/slkscre.ttf')
+        self.font = pygame.font.Font(font_path, 48)
         
         # Build the button's rect object and center it.
         self.rect = pygame.Rect(0, 0, self.width, self.height)

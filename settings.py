@@ -44,3 +44,5 @@ class Settings:
         self.girl_speed *= self.speedup_scale
         self.bullet_speed *= self.speedup_scale
         self.cat_speed *= self.speedup_scale
+        
+        self.cat_points = int(self.cat_points * self.score_scale)

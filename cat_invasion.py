@@ -8,6 +8,9 @@ from time import sleep
 from game_stats import GameStats
 from start_button import GameButton
 from scoreboard import Scoreboard
+import os
+
+
 
 #Making an empty Pygame window by creating a class to represent the game.
 
@@ -15,6 +18,7 @@ class CatInvasion:
     def __init__(self):
         """Overall class to manage game assets and behavior."""
         pygame.init()
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.clock = pygame.time.Clock() #We measure the time it takes to iterate over the
         self.settings = Settings() #initialize the settings from settings module
         self.screen = pygame.display.set_mode((self.settings.screen_width,
@@ -32,7 +36,8 @@ class CatInvasion:
         
         self._create_cat_fleet()
         
-        self.bg_image = self._load_bg_image('/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
+        bg_image_path = os.path.join(self.base_dir, 'assets/Game images/G6R5FIHLLMLpkVSBxNwb-1-22vuz.bmp')
+        self.bg_image = self._load_bg_image(bg_image_path)
         
         # Start Cat Invasion in an active state.
         self.game_active = False
@@ -266,6 +271,8 @@ class CatInvasion:
             # Reset the game statistics.
             self.stats.reset_stats()
             self.sb.prep_score()
+            self.sb.prep_level()
+            
             self.game_active = True
             
             # Get rid of any remaining bullets and aliens.

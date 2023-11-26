@@ -1,9 +1,11 @@
 import pygame.font
-  
+import os
+
 class Scoreboard:
     """A class to report scoring information."""
     def __init__(self, ai_game):
         """Initialize scorekeeping attributes.""" 
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.screen = ai_game.screen 
         self.screen_rect = self.screen.get_rect() 
         self.settings = ai_game.settings 
@@ -11,7 +13,8 @@ class Scoreboard:
     
         # Font settings for scoring information.
         self.text_color = (30, 30, 30)
-        self.font = pygame.font.Font("/Users/daniilfjodorov/Desktop/CodingProjects/Alien Invaders/Project-PyGame-Cat-Invasion/assets/slkscre.ttf", 48)
+        font_path = os.path.join(self.base_dir, 'assets/slkscre.ttf')
+        self.font = pygame.font.Font(font_path, 35)
         
         # Prepare the initial score images.
         self.prep_score()
