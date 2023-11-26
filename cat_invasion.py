@@ -7,6 +7,7 @@ from allien_cat import Alien_Cat
 from time import sleep
 from game_stats import GameStats
 from start_button import GameButton
+from scoreboard import Scoreboard
 
 #Making an empty Pygame window by creating a class to represent the game.
 
@@ -23,6 +24,7 @@ class CatInvasion:
         
         # Create an instance to store game statistics.
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
         
         self.girl = Girl(self)
         self.bullets = pygame.sprite.Group()
@@ -122,6 +124,9 @@ class CatInvasion:
             bullet.draw_bullet()
         self.girl.blitme()
         self.aliens.draw(self.screen)
+        
+        # Draw the score information.
+        self.sb.show_score()
         
         # Draw the play button if the game is inactive.
         if not self.game_active:

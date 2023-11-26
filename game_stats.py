@@ -9,3 +9,5 @@ class GameStats:
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
         self.lives_left = self.settings.lives_limit
+        self.score = 0
+        
