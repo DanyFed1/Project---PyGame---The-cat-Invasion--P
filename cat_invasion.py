@@ -149,6 +149,10 @@ class CatInvasion:
             self.bullets.empty()
             self._create_cat_fleet()
             self.settings.increase_speed()
+            
+            # Increase level.
+            self.stats.level += 1
+            self.sb.prep_level()
         
     def _toggle_fullscreen(self):
         """Toggle between fullscreen and windowed mode."""
