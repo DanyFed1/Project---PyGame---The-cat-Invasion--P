@@ -9,20 +9,32 @@ class Settings:
         self.bg_color = (30,0,30) #background color
         
         #Girl settings
-        self.girl_speed = 1.5 #Controlling characters speed
         self.lives_limit = 3
         
         #Bullet settings:  #To be later replaced with a fish onject.
-        self.bullet_speed = 2.5
         self.bullet_width = 30
         self.bullet_height = 40
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 5 #sets the limit of allowed bullets
         
         #Cats' settings: 
-        self.cat_speed = 1.0
         self.fleet_drop_speed = 10
-        #fleet direction of 1 represents right; -1 represents left.
-        self.fleet_direction = 1
         
+        # How quickly the game speeds up
+        self.speedup_scale = 1.2
         
+        self.initialize_dynamic_settings()
+        
+    def initialize_dynamic_settings(self):
+        """Settings will change throughout the game."""
+        self.girl_speed = 1.5 #Controlling characters speed
+        self.bullet_speed = 2.5
+        self.cat_speed = 1.0
+        # fleet_direction of 1 represents right; -1 represents left.
+        self.fleet_direction = 1    
+        
+    def increase_speed(self):
+        """Increase speed settings."""
+        self.girl_speed *= self.speedup_scale
+        self.bullet_speed *= self.speedup_scale
+        self.cat_speed *= self.speedup_scale
